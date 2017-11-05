@@ -17,13 +17,13 @@ public:
   class iterator;               // iterador sobre todos los elementos del vector
 
   typedef unsigned int size_type;
-  
+
   //////////// constructores //////////////
-    		
+
   vectorD<T>( const  T  & t=  T () );
   // constructor por defecto. t hace referencia al valor por defecto del vector
-        	
-  vectorD<T>(  const vectorD< T > & b);    	
+
+  vectorD<T>(  const vectorD< T > & b);
   /** constructor primitivo que hace una copia del vector disperso b. */
 
   vectorD<T>( int numcomp, const  T  & t =  T () );
@@ -32,7 +32,7 @@ public:
    */
 
 
-  ////////////// destructor ////////////  	
+  ////////////// destructor ////////////
   ~vectorD<T>();
 
 
@@ -57,12 +57,12 @@ public:
   void pop_back(  );
   // elimina un elemento del vectorD. Disminuye en 1 el tamanio
 
-  void clear(); 
-  // elimina todos los elementos del vectorD. Tamanio es 0
+  void clear();
+  // elimina todos los elementos del vectorD. Tamaño es 0
 
   void resize(int s);
   // cambia el tama~no del vector a "s" elementos. Si s es menor que el tama~no actual, elimina los restantes. Si es mayor,
-  // aumenta la capacidad del vector asignando a todos los nuevos elementos el valor nulo. 
+  // aumenta la capacidad del vector asignando a todos los nuevos elementos el valor nulo.
 
 
   /////////////// operadores ///////////////////
@@ -89,7 +89,7 @@ public:
   iterator end();
   /** iterador final (siguiente al ultimo)  sobre todos los elementos del vector */
 
-  stored_iterator sbegin(); 
+  stored_iterator sbegin();
   /** iterador inicio sobre elementos no nulos */
 
   stored_iterator send();
@@ -112,39 +112,39 @@ private: // parte  privada
     pos: 0 1 2 ... a-1 a ... x .... b....  ... n-1 n  n+1 ..... M-1
     val: t t t ....t  v1 ... t .... v2 ..  ... t   vn  t  ...... t
     */
-   
+
   int checkRepFails();
   /* Comprueba el IR y devuelve el tipo de fallo segun indica el IR. En caso de cumplir el IR se devuelve 0 */
 
   /* IR :
     IR(rep): rep ---> bool
    (vd,n_ele,v_nulo) :
-    0 <= vd.size() < n_ele;  //Fallo tipo 1 
-    vd[i].second != v_nulo, para todo i = 0, ..., vd.size()-1; // Fallo tipo 2 
+    0 <= vd.size() < n_ele;  //Fallo tipo 1
+    vd[i].second != v_nulo, para todo i = 0, ..., vd.size()-1; // Fallo tipo 2
     vd[i].first >=0, para todo i = 0, ..., vd.size()-1; // Fallo tipo 3
     vd[i].first < vd[j].first si i<j // Fallo tipo 4
    */
-  
+
 /* ITERADORES SOBRE VECTOR DISPERSO */
-    
+
 public:
   class stored_iterator{      //stored_iterator está implementada
     public:
       friend class vectorD<T>;
-      
-      stored_iterator() {} 
+
+      stored_iterator() {}
       stored_iterator(const stored_iterator & d) : ite(d.ite) {}
-      const pair<int, T > & operator *(  ) { return (*ite);}  
+      const pair<int, T > & operator *(  ) { return (*ite);}
       stored_iterator & operator++( ) {++ite; return *this;}    // operador ++ prefijo (invocado con ++it)
       stored_iterator operator++(int ) {stored_iterator tmp(*this); ++ite; return tmp;}  // operador ++ posfijo (invocado con it++)
       bool operator == (const stored_iterator & d) {return ite == d.ite;}
       bool operator != (const stored_iterator & d) {return ite != d.ite; }
-      
+
     private:
       typename list<pair<int, T > >::iterator ite;
   };
 
-  class iterator{             //iterator no está implementada 
+  class iterator{             //iterator no está implementada
     public:
       friend class vectorD<T>;
       iterator();
@@ -164,20 +164,20 @@ public:
       /* FA(rep): rep -- > iterador sobre vector abstracto
         (i_vect, ite_rep, el_vec):
         i_vect = k
-        ite_rep = p 
+        ite_rep = p
         el_vect = v
          --------->
         iterador a la posicion k-esima del vector abstracto con valor nulo (*v).v_nulo
          */
-     
+
         /* IR :
          IR(rep): rep ---> bool
-        (i_vect, ite_rep): 
+        (i_vect, ite_rep):
          --------->
          0 <= i_vect <=n_ele
          i_vect <= (*ite_rep).first
-         */   
-       
+         */
+
   };
 
 
@@ -186,5 +186,3 @@ public:
 #include "vectorD.hxx"
 
 #endif
- 
- 
