@@ -50,13 +50,13 @@ typename vectorD<T>::void vectorD<T>::set(int p, const T & t){
 			int i = 0;
 			bool sigo = true;
 
-			for(std::list<int>::iterator it = vd.begin(); it != vd.end() && sigo; ++it){
-				if(get<0>(it) == p){
-					get<0>(it) = t;
+			for(std::list<T>::iterator it = vd.begin(); it != vd.end() && sigo; ++it){
+				if(*it.first == p){
+					*it.first = t;
 					sigo = false;
 				}			
-				else if(get<0>(it) > p){
-					it.insert(i,pair<p,t>);
+				else if(*it.first > p){
+					*it.insert(i,pair<p,t>);
 					sigo = false;
 				}
 				i++;
@@ -75,7 +75,7 @@ typename vectorD<T>::void vectorD<T>::push_back(const T & t){
 
 template <class T>
 typename vectorD<T>::void vectorD<T>::pop_back(){
-	if(get<0>(vd.back()) == n_ele -1)
+	if(vd.back().first == n_ele -1)
 		vd.pop_back();
 
 	n_ele--;
@@ -93,9 +93,38 @@ template <class T>
 typename vectorD<T>::void vectorD<T>::resize(int s){
 
 	if (s < n_ele){
-		while(get<0>(vd.back()) >= s - 1)
+		while(vd.back().first >= s - 1)
 			vd.pop_back();
 	}
 
 	n_ele = s;
+}
+
+template <class T>
+typename vectorD<T>::vectorD<T> & vectorD<T>::operator=(const vectorD<T> & x)
+{
+	*this.n_ele = x.n_ele;
+	*this.v_nulo = x.v_nulo;
+	*this.vd = x.vd;
+	
+	return this;
+}
+
+template <class T>
+typename vectorD<T>::const T & vectorD<T>::operator[](int c) const
+{
+	bool sigo = true;
+	T* referencia;
+		
+	for(std::list<T>::iterator it = vd.begin(); it != vd.end() && sigo; ++it){ //Se busca si es no nulo
+		if(*it.first == c){
+			referencia = it;
+			sigo = false;
+		}
+	}
+	
+	if (sigo) referencia = &v_nulo;				//Si es nulo se devuelve una referencia a el atributo de la clase,
+												//Por qué? no se
+	
+	return referencia;
 }
