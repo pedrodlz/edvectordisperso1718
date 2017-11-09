@@ -1,5 +1,6 @@
 #include <cassert>
 #include <algorithm>
+#include <iostream>
 
 //TO-DO: Completar la implementacion de los metodos de vectorD.h
 
@@ -180,13 +181,13 @@ typename vectorD<T>::stored_iterator vectorD<T>::send()
     i.ite = vd.end();
     return i;
 }
-/*
+
 //FALTA BEGIN() Y END()
 template <class T>
 typename vectorD<T>::iterator vectorD<T>::begin()
 {
-    stored_iterator i;
-    i.ite = vd.begin();
+    iterator i;
+    i.ite_rep = vd.begin();
     return i;
 }
 
@@ -194,14 +195,14 @@ template <typename T>
 typename vectorD<T>::iterator vectorD<T>::end()
 {
     iterator i;
-    i.ite = vd.end();
+    i.ite_rep = vd.end();
     return i;
 }
-*/
+
 
 //Implementacion iterator
 template <typename T>
-vectorD<T>::iterator::iterator(){ }
+vectorD<T>::iterator::iterator() : i_vect(0){}
 
 template <typename T>
 vectorD<T>::iterator::iterator(const iterator & d)
@@ -210,37 +211,57 @@ vectorD<T>::iterator::iterator(const iterator & d)
     ite_rep = d.ite_rep;
     el_vect = d.el_vect;
 }
-/*
+
 template <typename T>
-const T & vectorD<T>::iterator::operator * ()
+const T & vectorD<T>::iterator::operator *()
 {
+
     stored_iterator ite;
-    for(ite = el_vect.sbegin(); ite != el_vect.send(); ++ite){
+    T val = el_vect->default_value();
+    for(ite = el_vect->sbegin(); ite != el_vect->send(); ++ite){
         if((*ite).first == i_vect){
-            return((*ite).second);
+            val = (*ite).second;
         }
     }
-    return(el_vect->default_value());
+    return(val);
 }
-/*
+
 template <typename T>
 typename vectorD<T>::iterator & vectorD<T>::iterator::operator++()
 {
     i_vect++;
-    iterator i = el_vect.begin();
-    return(i);
+    ++ite_rep;
+    return(*this);
 }
 
 template <typename T>
 typename vectorD<T>::iterator vectorD<T>::iterator::operator++(int)
 {
     i_vect++;
-    iterator i = el_vect.begin();
-    return(i);
-}*/
-/*
+    iterator tmp (*this);
+    ++ite_rep;
+    return(tmp);
+}
+
 template <typename T>
 bool vectorD<T>::iterator::operator==(const iterator & d)
 {
-    return();
-}*/
+    return(ite_rep == d.ite_rep);
+}
+
+template <typename T>
+bool vectorD<T>::iterator::operator!=(const iterator & d)
+{
+    return(!(*this == d));
+}
+
+template <typename T>
+typename vectorD<T>::iterator & vectorD<T>::iterator::operator=(const iterator & d)
+{
+    if (this != &d) {
+        i_vect = d.i_vect;
+        ite_rep = d.ite_rep;
+        el_vect = d.el_vect;
+    }
+    return(*this);
+}
