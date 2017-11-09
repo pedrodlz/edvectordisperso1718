@@ -89,6 +89,17 @@ void vectorD<T>::set(int p, const T & t){
 			}
 		}
 	}
+    else{
+
+        bool sigo = true;
+
+        for(it = vd.begin(); it != vd.end() && sigo; ++it){
+            if((it)->first == p){
+                vd.erase(it);
+                sigo = false;
+            }
+        }
+    }
 }
 
 template <class T>
