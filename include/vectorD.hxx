@@ -3,6 +3,8 @@
 
 //TO-DO: Completar la implementacion de los metodos de vectorD.h
 
+using namespace std;
+
 template <class T>
 vectorD<T>::vectorD(const  T  & t){
   n_ele = 0;
@@ -22,6 +24,10 @@ vectorD<T>::vectorD(int numcomp, const  T  & t){
 	v_nulo = t;
 }
 
+template <class T>
+vectorD<T>::~vectorD(){
+    n_ele = 0;
+}
 
 template <class T>
 typename vectorD<T>::size_type vectorD<T>::size() const{
@@ -41,7 +47,7 @@ bool vectorD<T>::empty(){
 	return n_ele == 0;
 }
 
-template <class T>
+template <typename T>
 void vectorD<T>::set(int p, const T & t){
 
 	if(t != v_nulo){
@@ -50,16 +56,16 @@ void vectorD<T>::set(int p, const T & t){
 			int i = 0;
 			bool sigo = true;
 
-            typename std::list<std::pair<int,T> >::iterator it;
+            typename list<pair<int,T> >::iterator it;
 
 			for(it = vd.begin(); it != vd.end() && sigo; ++it){
-				if((*it).first == p){
-					(*it).first = t;
+				if((it)->first == p){
+					(it)->first = t;
 					sigo = false;
 				}
 				else if((*it).first > p){
                     pair<int,T> par (p,t);
-					(*it).insert(i,par);
+					vd.insert(it,par);
 					sigo = false;
 				}
 				i++;
@@ -116,12 +122,12 @@ vectorD<T> & vectorD<T>::operator=(const vectorD<T> & x)
 	return *this;
 }
 
-template <class T>
+template <typename T>
 const T & vectorD<T>::operator[](int c) const
 {
 	bool sigo = true;
 
-    typename std::list<std::pair<int,T> >::iterator it;
+    typename list<pair<int,T> >::const_iterator it;
 
 	for(it = vd.begin(); it != vd.end() && sigo; ++it){ //Se busca si es no nulo
 		if((*it).first == c){
