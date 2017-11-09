@@ -30,19 +30,19 @@ typename vectorD<T>::size_type vectorD<T>::size() const{
 }
 
 template <class T>
-typename vectorD<T>::T vectorD<T>::default_value() const{
+T vectorD<T>::default_value() const{
 
 	return v_nulo;
 }
 
 template <class T>
-typename vectorD<T>::bool vectorD<T>::empty(){
+bool vectorD<T>::empty(){
 
 	return n_ele == 0;
 }
 
 template <class T>
-typename vectorD<T>::void vectorD<T>::set(int p, const T & t){
+void vectorD<T>::set(int p, const T & t){
 
 	if(t != v_nulo){
 		if(p < n_ele){
@@ -50,13 +50,14 @@ typename vectorD<T>::void vectorD<T>::set(int p, const T & t){
 			int i = 0;
 			bool sigo = true;
 
-			for(std::list<T>::iterator it = vd.begin(); it != vd.end() && sigo; ++it){
+			for(typename std::list<T>::iterator it = vd.begin(); it != vd.end() && sigo; ++it){
 				if(*it.first == p){
 					*it.first = t;
 					sigo = false;
 				}
 				else if(*it.first > p){
-					*it.insert(i,pair<p,t>);
+                    pair<int,T> par (p,t);
+					*it.insert(i,par);
 					sigo = false;
 				}
 				i++;
@@ -66,15 +67,17 @@ typename vectorD<T>::void vectorD<T>::set(int p, const T & t){
 }
 
 template <class T>
-typename vectorD<T>::void vectorD<T>::push_back(const T & t){
-	if(t != v_nulo)
-		vd.push_back(pair<n_ele,t>);
+void vectorD<T>::push_back(const T & t){
+	if(t != v_nulo){
+        pair<int,T> par (n_ele,t);
+        vd.push_back(par);
+    }
 
 	n_ele++;
 }
 
 template <class T>
-typename vectorD<T>::void vectorD<T>::pop_back(){
+void vectorD<T>::pop_back(){
 	if(vd.back().first == n_ele -1)
 		vd.pop_back();
 
@@ -82,7 +85,7 @@ typename vectorD<T>::void vectorD<T>::pop_back(){
 }
 
 template <class T>
-typename vectorD<T>::void vectorD<T>::clear(){
+void vectorD<T>::clear(){
 	if(!vd.empty())
 		vd.clear();
 
@@ -90,7 +93,7 @@ typename vectorD<T>::void vectorD<T>::clear(){
 }
 
 template <class T>
-typename vectorD<T>::void vectorD<T>::resize(int s){
+void vectorD<T>::resize(int s){
 
 	if (s < n_ele){
 		while(vd.back().first >= s - 1)
@@ -101,22 +104,23 @@ typename vectorD<T>::void vectorD<T>::resize(int s){
 }
 
 template <class T>
-typename vectorD<T>::vectorD<T> & vectorD<T>::operator=(const vectorD<T> & x)
+vectorD<T> & vectorD<T>::operator=(const vectorD<T> & x)
 {
-	*this.n_ele = x.n_ele;
-	*this.v_nulo = x.v_nulo;
-	*this.vd = x.vd;
-
-	return this;
+    if (this != &x) {
+    	*this.n_ele = x.n_ele;
+    	*this.v_nulo = x.v_nulo;
+    	*this.vd = x.vd;
+    }
+	return *this;
 }
 
 template <class T>
-typename vectorD<T>::const T & vectorD<T>::operator[](int c) const
+const T & vectorD<T>::operator[](int c) const
 {
 	bool sigo = true;
 	T* referencia;
 
-	for(std::list<T>::iterator it = vd.begin(); it != vd.end() && sigo; ++it){ //Se busca si es no nulo
+	for(typename std::list<T>::iterator it = vd.begin(); it != vd.end() && sigo; ++it){ //Se busca si es no nulo
 		if(*it.first == c){
 			referencia = it;
 			sigo = false;
@@ -130,7 +134,7 @@ typename vectorD<T>::const T & vectorD<T>::operator[](int c) const
 }
 
 template <class T>
-typename vectorD<T>::bool vectorD<T>::operator==(const vectorD<T> & x)
+bool vectorD<T>::operator==(const vectorD<T> & x)
 {
 	bool iguales = false;
 
@@ -147,7 +151,7 @@ typename vectorD<T>::bool vectorD<T>::operator==(const vectorD<T> & x)
 }
 
 template <class T>
-typename vectorD<T>::bool vectorD<T>::operator!=(const vectorD<T> & x)
+bool vectorD<T>::operator!=(const vectorD<T> & x)
 {
 	return !(*this == x);
 }
