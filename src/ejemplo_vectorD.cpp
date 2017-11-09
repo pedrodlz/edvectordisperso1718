@@ -14,7 +14,7 @@ int main() {
   vec.resize(98);          // 98 elementos
   cout << "Preparado vectorD para tamaño: "<<vec.size()<<endl;
 
-  for (unsigned i=0; i<vec.size(); i+=10)
+  for (int i=0; i<vec.size(); i+=10)
     vec.set(i, 20);         // componentes con posición múltiplo de 10 se ponen a 20, el resto nulos
 
   vec.push_back(0);     //componente 98 es 0
@@ -25,7 +25,7 @@ int main() {
 
   //mostramos todo el vector para comprobar:
   cout << "Iteramos sobre todas las componentes a través de los índices: "<<endl;
-  for (unsigned i=0; i<vec.size(); i++)
+  for (int i=0; i<vec.size(); i++)
     cout << "vec["<<i<<"]: "<<vec[i]<<endl;
 
   cout << "Elimino el último elemento.";
@@ -37,13 +37,13 @@ int main() {
   vectorD<int>::stored_iterator it_nonulo;
   for (it_nonulo = vec.sbegin(); it_nonulo != vec.send(); it_nonulo++)
     cout << "posicion "<<(*it_nonulo).first<<" valor: "<<(*it_nonulo).second << endl;
-  /*
+  
   //Prueba con iterator
   cout << "Iteramos sobre todos los elementos con iterator: "<<endl;
   vectorD<int>::iterator it_todos;
   for (it_todos = vec.begin(); it_todos != vec.end(); it_todos++)
     cout << " valor: "<<(*it_todos) << endl;
-*/
+
 
   vec.clear();
   cout << "Borrado el contenido. Nuevo tamaño: "<<vec.size();

@@ -50,14 +50,16 @@ void vectorD<T>::set(int p, const T & t){
 			int i = 0;
 			bool sigo = true;
 
-			for(typename std::list<T>::iterator it = vd.begin(); it != vd.end() && sigo; ++it){
-				if(*it.first == p){
-					*it.first = t;
+            typename std::list<std::pair<int,T> >::iterator it;
+
+			for(it = vd.begin(); it != vd.end() && sigo; ++it){
+				if((*it).first == p){
+					(*it).first = t;
 					sigo = false;
 				}
-				else if(*it.first > p){
+				else if((*it).first > p){
                     pair<int,T> par (p,t);
-					*it.insert(i,par);
+					(*it).insert(i,par);
 					sigo = false;
 				}
 				i++;
@@ -118,19 +120,18 @@ template <class T>
 const T & vectorD<T>::operator[](int c) const
 {
 	bool sigo = true;
-	T* referencia;
 
-	for(typename std::list<T>::iterator it = vd.begin(); it != vd.end() && sigo; ++it){ //Se busca si es no nulo
-		if(*it.first == c){
-			referencia = it;
+    typename std::list<std::pair<int,T> >::iterator it;
+
+	for(it = vd.begin(); it != vd.end() && sigo; ++it){ //Se busca si es no nulo
+		if((*it).first == c){
+			return ((*it).first);
 			sigo = false;
 		}
 	}
 
-	if (sigo) referencia = &v_nulo;				//Si es nulo se devuelve una referencia a el atributo de la clase,
+	if (sigo) return v_nulo;				//Si es nulo se devuelve una referencia a el atributo de la clase,
 												//Por qué? no se
-
-	return referencia;
 }
 
 template <class T>
