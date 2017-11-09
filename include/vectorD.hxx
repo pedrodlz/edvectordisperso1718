@@ -166,10 +166,27 @@ bool vectorD<T>::operator!=(const vectorD<T> & x)
 }
 
 template <class T>
+typename vectorD<T>::stored_iterator vectorD<T>::sbegin()
+{
+    stored_iterator i;
+    i.ite = vd.begin();
+    return i;
+}
+
+template <typename T>
+typename vectorD<T>::stored_iterator vectorD<T>::send()
+{
+    stored_iterator i;
+    i.ite = vd.end();
+    return i;
+}
+/*
+//FALTA BEGIN() Y END()
+template <class T>
 typename vectorD<T>::iterator vectorD<T>::begin()
 {
-    iterator i;
-    i.ite_rep = vd.begin();
+    stored_iterator i;
+    i.ite = vd.begin();
     return i;
 }
 
@@ -177,12 +194,53 @@ template <typename T>
 typename vectorD<T>::iterator vectorD<T>::end()
 {
     iterator i;
-    i.ite_rep = vd.end();
+    i.ite = vd.end();
     return i;
 }
-
-//FALTA SBEGIN() Y SEND()
-
-
+*/
 
 //Implementacion iterator
+template <typename T>
+vectorD<T>::iterator::iterator(){ }
+
+template <typename T>
+vectorD<T>::iterator::iterator(const iterator & d)
+{
+    i_vect = d.i_vect;
+    ite_rep = d.ite_rep;
+    el_vect = d.el_vect;
+}
+/*
+template <typename T>
+const T & vectorD<T>::iterator::operator * ()
+{
+    stored_iterator ite;
+    for(ite = el_vect.sbegin(); ite != el_vect.send(); ++ite){
+        if((*ite).first == i_vect){
+            return((*ite).second);
+        }
+    }
+    return(el_vect->default_value());
+}
+/*
+template <typename T>
+typename vectorD<T>::iterator & vectorD<T>::iterator::operator++()
+{
+    i_vect++;
+    iterator i = el_vect.begin();
+    return(i);
+}
+
+template <typename T>
+typename vectorD<T>::iterator vectorD<T>::iterator::operator++(int)
+{
+    i_vect++;
+    iterator i = el_vect.begin();
+    return(i);
+}*/
+/*
+template <typename T>
+bool vectorD<T>::iterator::operator==(const iterator & d)
+{
+    return();
+}*/

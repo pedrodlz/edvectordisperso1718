@@ -149,7 +149,7 @@ public:
       friend class vectorD<T>;
       iterator();
       iterator(const iterator & d);
-      const  T  & operator *(  );
+      const  T  & operator *();
       iterator & operator++( );     // operador ++ prefijo (invocado con ++it)
       iterator operator++(int );    // operador ++ posfijo (invocado con it++)
       bool operator == (const iterator & d);
