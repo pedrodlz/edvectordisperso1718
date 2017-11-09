@@ -65,6 +65,7 @@ void vectorD<T>::set(int p, const T & t){
 					sigo = false;
 				}
 				else if((*it).first > p){
+                    cout << (*it).first ;
                     pair<int,T> par (p,t);
 					vd.insert(it,par);
 					sigo = false;
@@ -133,7 +134,7 @@ const T & vectorD<T>::operator[](int c) const
 	for(it = vd.begin(); it != vd.end() && sigo; ++it){ //Se busca si es no nulo
 		if((*it).first == c){
 			return ((*it).first);
-			sigo = false;
+			//sigo = false; <--no tiene sentido despues de un return
 		}
 	}
 
@@ -163,3 +164,25 @@ bool vectorD<T>::operator!=(const vectorD<T> & x)
 {
 	return !(*this == x);
 }
+
+template <class T>
+typename vectorD<T>::iterator vectorD<T>::begin()
+{
+    iterator i;
+    i.ite_rep = vd.begin();
+    return i;
+}
+
+template <typename T>
+typename vectorD<T>::iterator vectorD<T>::end()
+{
+    iterator i;
+    i.ite_rep = vd.end();
+    return i;
+}
+
+//FALTA SBEGIN() Y SEND()
+
+
+
+//Implementacion iterator

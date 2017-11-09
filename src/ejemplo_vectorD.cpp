@@ -37,13 +37,13 @@ int main() {
   vectorD<int>::stored_iterator it_nonulo;
   for (it_nonulo = vec.sbegin(); it_nonulo != vec.send(); it_nonulo++)
     cout << "posicion "<<(*it_nonulo).first<<" valor: "<<(*it_nonulo).second << endl;
-  /*
+  */
   //Prueba con iterator
   cout << "Iteramos sobre todos los elementos con iterator: "<<endl;
   vectorD<int>::iterator it_todos;
   for (it_todos = vec.begin(); it_todos != vec.end(); it_todos++)
     cout << " valor: "<<(*it_todos) << endl;
-*/
+
 
   vec.clear();
   cout << "Borrado el contenido. Nuevo tamaño: "<<vec.size();
