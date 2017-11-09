@@ -24,8 +24,9 @@ vectorD<T>::vectorD(int numcomp, const  T  & t){
 	v_nulo = t;
 }
 
-template <class T>
-vectorD<T>::~vectorD(){
+template <typename T>
+vectorD<T>::~vectorD()
+{
     n_ele = 0;
 }
 

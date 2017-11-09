@@ -33,7 +33,7 @@ public:
 
 
   ////////////// destructor ////////////
-  ~vectorD<T>();
+  ~vectorD();
 
 
   /////////// Consultores ////////////

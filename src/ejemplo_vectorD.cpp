@@ -31,7 +31,7 @@ int main() {
   cout << "Elimino el último elemento.";
   vec.pop_back();
   cout << " El tamaño de vectorD es ahora: "<<vec.size()<<endl;   //tras eliminar el último elemento, tamaño debe ser 100
-
+/*
   //Prueba con stored_iterator
   cout << "Iteramos sobre los elementos no nulos con stored_iterator: "<<endl;
   vectorD<int>::stored_iterator it_nonulo;
