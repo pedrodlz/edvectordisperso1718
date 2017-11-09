@@ -58,20 +58,34 @@ void vectorD<T>::set(int p, const T & t){
 			int i = 0;
 			bool sigo = true;
 
-            typename list<pair<int,T> >::iterator it;
+            pair<int,T> par (p,t);
 
-			for(it = vd.begin(); it != vd.end() && sigo; ++it){
-				if((it)->first == p){
-					(it)->first = t;
-					sigo = false;
-				}
-				else if((*it).first > p){
-                    cout << (*it).first ;
-                    pair<int,T> par (p,t);
-					vd.insert(it,par);
-					sigo = false;
-				}
-				i++;
+            if(!vd.empty()){
+                cout << "Prueba 2";
+
+                typename list<pair<int,T> >::iterator it;
+
+                for(it = vd.begin(); it != vd.end() && sigo; ++it){
+
+                    if((it)->first == p){
+    					(it)->second = t;
+    					sigo = false;
+    				}
+                    i++;
+                }
+                if((vd.front().first > p) && sigo){
+    				vd.push_front(par);
+    				sigo = false;
+    			}
+                if((vd.back().first < p) && sigo){
+                    vd.push_back(par);
+                    sigo = false;
+                }
+            }
+            else{
+                cout << "flag" ;
+                vd.push_back(par);
+
 			}
 		}
 	}
@@ -107,8 +121,10 @@ template <class T>
 void vectorD<T>::resize(int s){
 
 	if (s < n_ele){
-		while(vd.back().first >= s - 1)
-			vd.pop_back();
+        if(!vd.empty()){
+		          while(vd.back().first >= s - 1)
+			               vd.pop_back();
+        }
 	}
 
 	n_ele = s;
@@ -128,18 +144,16 @@ vectorD<T> & vectorD<T>::operator=(const vectorD<T> & x)
 template <typename T>
 const T & vectorD<T>::operator[](int c) const
 {
-	bool sigo = true;
-
     typename list<pair<int,T> >::const_iterator it;
 
-	for(it = vd.begin(); it != vd.end() && sigo; ++it){ //Se busca si es no nulo
+	for(it = vd.begin(); it != vd.end(); ++it){ //Se busca si es no nulo
 		if((*it).first == c){
-			return ((*it).first);
-			//sigo = false; <--no tiene sentido despues de un return
+			return ((*it).second);
+			//sigo = false; <--no tiene sentido despues de un return **Ha sido en SO no lo tengas en cuenta crack**
 		}
 	}
 
-	if (sigo) return v_nulo;				//Si es nulo se devuelve una referencia a el atributo de la clase,
+	return v_nulo;				//Si es nulo se devuelve una referencia a el atributo de la clase,
 												//Por qué? no se
 }
 
