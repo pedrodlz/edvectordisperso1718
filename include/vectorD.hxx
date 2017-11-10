@@ -63,7 +63,7 @@ void vectorD<T>::set(int p, const T & t){
             if(!vd.empty()){
                 cout << "Prueba 2";
 
-                typename list<pair<int,T> >::iterator it;
+                typename list<pair<int,T> >::iterator it,itf;
 
                 for(it = vd.begin(); it != vd.end() && sigo; ++it){
 
@@ -73,13 +73,23 @@ void vectorD<T>::set(int p, const T & t){
     				}
                     i++;
                 }
-                if((vd.front().first > p) && sigo){
+                if(vd.front().first > p){
     				vd.push_front(par);
     				sigo = false;
     			}
-                if((vd.back().first < p) && sigo){
+                else if(vd.back().first < p){
                     vd.push_back(par);
                     sigo = false;
+                }
+                else{
+                    for(it = vd.begin(); it != vd.end() && sigo; ++it){
+                        itf = it;
+                        itf++;
+                        if(((it)->first < p) && ((itf)->first > p)){
+                            vd.insert(itf,par);
+                            sigo = false;
+                        }
+                    }
                 }
             }
             else{
@@ -92,6 +102,8 @@ void vectorD<T>::set(int p, const T & t){
     else{
 
         bool sigo = true;
+
+        typename list<pair<int,T> >::iterator it;
 
         for(it = vd.begin(); it != vd.end() && sigo; ++it){
             if((it)->first == p){
