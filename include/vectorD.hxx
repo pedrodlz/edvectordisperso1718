@@ -226,7 +226,7 @@ typename vectorD<T>::iterator vectorD<T>::begin()
     iterator i;
     i.i_vect = 0;
     i.ite_rep = vd.begin();
-    i.el_vect = *this;
+    i.el_vect = this;
     return i;
 }
 
@@ -236,7 +236,7 @@ typename vectorD<T>::iterator vectorD<T>::end()
     iterator i;
     i.i_vect = n_ele;
     i.ite_rep = vd.end();
-    i.el_vect = *this;
+    i.el_vect = this;
     return i;
 }
 
