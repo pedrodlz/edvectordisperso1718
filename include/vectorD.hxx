@@ -243,7 +243,7 @@ typename vectorD<T>::iterator vectorD<T>::end()
 
 //Implementacion iterator
 template <typename T>
-vectorD<T>::iterator::iterator() : i_vect(0){}
+vectorD<T>::iterator::iterator(){}
 
 template <typename T>
 vectorD<T>::iterator::iterator(const iterator & d)
@@ -258,13 +258,16 @@ const T & vectorD<T>::iterator::operator *()
 {
 
     stored_iterator ite;
-    T val = el_vect->default_value();
-    for(ite = el_vect->sbegin(); ite != el_vect->send(); ++ite){
+    bool sigo = true;
+    int contador=0;
+    for(ite = el_vect->sbegin(); ite != el_vect->send() && sigo; ++ite){
+        contador++;
         if((*ite).first == i_vect){
-            val = (*ite).second;
+            sigo = false;
         }
     }
-    return(val);
+    if(!sigo){cout <<"oad"<<flush; return (*el_vect)[contador];}
+    else return(el_vect->v_nulo);
 }
 
 template <typename T>
@@ -272,7 +275,7 @@ typename vectorD<T>::iterator & vectorD<T>::iterator::operator++()
 {
     i_vect++;
     ++ite_rep;
-    return(*this);
+    return(this);
 }
 
 template <typename T>
