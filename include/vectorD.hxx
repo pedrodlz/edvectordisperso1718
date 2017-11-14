@@ -221,7 +221,9 @@ template <class T>
 typename vectorD<T>::iterator vectorD<T>::begin()
 {
     iterator i;
+    i.i_vect = 0;
     i.ite_rep = vd.begin();
+    i.el_vect = this;
     return i;
 }
 
@@ -229,14 +231,16 @@ template <typename T>
 typename vectorD<T>::iterator vectorD<T>::end()
 {
     iterator i;
+    i.i_vect = n_ele;
     i.ite_rep = vd.end();
+    i.el_vect = this;
     return i;
 }
 
 
 //Implementacion iterator
 template <typename T>
-vectorD<T>::iterator::iterator() : i_vect(0){}
+vectorD<T>::iterator::iterator(){}
 
 template <typename T>
 vectorD<T>::iterator::iterator(const iterator & d)
@@ -251,14 +255,16 @@ const T & vectorD<T>::iterator::operator *()
 {
 
     stored_iterator ite;
-    T val = el_vect->default_value();
-    for(ite = el_vect->sbegin(); ite != el_vect->send(); ++ite){
+    bool sigo = true;
+    int contador=0;
+    for(ite = el_vect->sbegin(); ite != el_vect->send() && sigo; ++ite){
+        contador++;
         if((*ite).first == i_vect){
-            val = (*ite).second;
+            sigo = false;
         }
     }
-    cout << "Valor: " << val << endl;
-    return(val);
+    if(!sigo){cout <<"oad"<<flush; return (*el_vect)[contador];}
+    else return(el_vect->v_nulo);
 }
 
 template <typename T>
@@ -266,7 +272,7 @@ typename vectorD<T>::iterator & vectorD<T>::iterator::operator++()
 {
     i_vect++;
     ++ite_rep;
-    return(*this);
+    return(this);
 }
 
 template <typename T>
