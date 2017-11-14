@@ -222,7 +222,13 @@ typename vectorD<T>::iterator vectorD<T>::begin()
 {
     iterator i;
     i.i_vect = 0;
-    i.ite_rep = vd.begin();
+
+    if(vd.begin().first == 0) i.ite_rep = vd.begin();
+    else{
+        pair<int,T> par(0,v_nulo);
+        i.ite_rep = par;
+    }
+
     i.el_vect = this;
     return i;
 }
@@ -232,7 +238,12 @@ typename vectorD<T>::iterator vectorD<T>::end()
 {
     iterator i;
     i.i_vect = n_ele;
-    i.ite_rep = vd.end();
+    if(vd.end().first == n_ele - 1) i.ite_rep = vd.end();
+    else{
+        pair<int,T> par (n_ele,v_nulo);
+        i.ite_rep =  par;
+    }
+
     i.el_vect = this;
     return i;
 }
@@ -253,34 +264,38 @@ vectorD<T>::iterator::iterator(const iterator & d)
 template <typename T>
 const T & vectorD<T>::iterator::operator *()
 {
-
-    stored_iterator ite;
-    bool sigo = true;
-    int contador=0;
-    for(ite = el_vect->sbegin(); ite != el_vect->send() && sigo; ++ite){
-        contador++;
-        if((*ite).first == i_vect){
-            sigo = false;
-        }
-    }
-    if(!sigo){cout <<"oad"<<flush; return (*el_vect)[contador];}
-    else return(el_vect->v_nulo);
+        return(*ite_rep);
 }
 
 template <typename T>
 typename vectorD<T>::iterator & vectorD<T>::iterator::operator++()
 {
     i_vect++;
-    ++ite_rep;
-    return(this);
+
+    bool sigo = true;
+
+    stored_iterator it;
+
+    for(it = sbegin(); it != send() && sigo; ++it){
+        if(i_vect == (*it).first){
+            ite_rep = it;
+            sigo = false;
+        }
+    }
+
+    if(sigo){
+        pair<int,T> par(i_vect,v_nulo);
+        ite_rep = par;
+    }
+
+    return(*this);
 }
 
 template <typename T>
 typename vectorD<T>::iterator vectorD<T>::iterator::operator++(int)
 {
-    i_vect++;
     iterator tmp (*this);
-    ++ite_rep;
+    ite_rep++;
     return(tmp);
 }
 
