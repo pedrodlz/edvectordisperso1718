@@ -40,12 +40,12 @@ int main() {
 
   //Prueba con iterator
   cout << "Iteramos sobre todos los elementos con iterator: "<<endl;
-  vectorD<int>::iterator it_todos;
+ /* vectorD<int>::iterator it_todos;
   for (it_todos = vec.begin(); it_todos != vec.end(); it_todos++)
-    cout << " valor: "<<(*it_todos) << endl;
+    cout << " valor: "<<(*it_todos) << endl;*/
 
   vec.clear();
-  cout << "Borrado el contenido. Nuevo tamaño: "<<vec.size();
+  cout << "Borrado el contenido. Nuevo tamaño: "<<vec.size() << endl;
 
 
 

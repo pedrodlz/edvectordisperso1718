@@ -61,8 +61,6 @@ void vectorD<T>::set(int p, const T & t){
             pair<int,T> par (p,t);
 
             if(!vd.empty()){
-                cout << "Prueba 2";
-
                 typename list<pair<int,T> >::iterator it,itf;
 
                 for(it = vd.begin(); it != vd.end() && sigo; ++it){
@@ -93,7 +91,6 @@ void vectorD<T>::set(int p, const T & t){
                 }
             }
             else{
-                cout << "flag" ;
                 vd.push_back(par);
 
 			}
@@ -260,6 +257,7 @@ const T & vectorD<T>::iterator::operator *()
             val = (*ite).second;
         }
     }
+    cout << "Valor: " << val << endl;
     return(val);
 }
 
