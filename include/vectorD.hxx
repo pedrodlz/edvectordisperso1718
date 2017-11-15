@@ -169,12 +169,10 @@ const T & vectorD<T>::operator[](int c) const
 	for(it = vd.begin(); it != vd.end(); ++it){ //Se busca si es no nulo
 		if((*it).first == c){
 			return ((*it).second);
-			//sigo = false; <--no tiene sentido despues de un return **Ha sido en SO no lo tengas en cuenta crack**
 		}
 	}
 
-	return v_nulo;				//Si es nulo se devuelve una referencia a el atributo de la clase,
-												//Por qué? no se
+	return v_nulo;				
 }
 
 template <class T>
@@ -216,19 +214,12 @@ typename vectorD<T>::stored_iterator vectorD<T>::send()
     return i;
 }
 
-//FALTA BEGIN() Y END()
 template <class T>
 typename vectorD<T>::iterator vectorD<T>::begin()
 {
     iterator i;
     i.i_vect = 0;
-
-    if(vd.begin().first == 0) i.ite_rep = vd.begin();
-    else{
-        pair<int,T> par(0,v_nulo);
-        i.ite_rep = par;
-    }
-
+    i.ite_rep = vd.begin();
     i.el_vect = this;
     return i;
 }
@@ -238,12 +229,7 @@ typename vectorD<T>::iterator vectorD<T>::end()
 {
     iterator i;
     i.i_vect = n_ele;
-    if(vd.end().first == n_ele - 1) i.ite_rep = vd.end();
-    else{
-        pair<int,T> par (n_ele,v_nulo);
-        i.ite_rep =  par;
-    }
-
+    i.ite_rep = vd.end();
     i.el_vect = this;
     return i;
 }
@@ -264,51 +250,58 @@ vectorD<T>::iterator::iterator(const iterator & d)
 template <typename T>
 const T & vectorD<T>::iterator::operator *()
 {
-        return(*ite_rep);
+    if (ite_rep != (*el_vect).vd.end()){
+        if (i_vect == (*ite_rep).first){
+            return (*ite_rep).second;
+        }
+        else
+        {
+            return (*el_vect).v_nulo;
+        }
+    }else
+        return (*el_vect).v_nulo;
+
 }
 
 template <typename T>
 typename vectorD<T>::iterator & vectorD<T>::iterator::operator++()
 {
     i_vect++;
-
-    bool sigo = true;
-
-    stored_iterator it;
-
-    for(it = sbegin(); it != send() && sigo; ++it){
-        if(i_vect == (*it).first){
-            ite_rep = it;
-            sigo = false;
-        }
-    }
-
-    if(sigo){
-        pair<int,T> par(i_vect,v_nulo);
-        ite_rep = par;
-    }
-
-    return(*this);
+    if (ite_rep != (*el_vect).vd.end())
+        if(i_vect>(*ite_rep).first)
+            ++ite_rep;
+    return *this;
 }
 
 template <typename T>
 typename vectorD<T>::iterator vectorD<T>::iterator::operator++(int)
 {
-    iterator tmp (*this);
-    ite_rep++;
-    return(tmp);
+    iterator tmp(*this);
+    ++i_vect;
+    if (ite_rep != (*el_vect).vd.end())
+        if (i_vect>(*ite_rep).first )
+            ++ite_rep;
+    return tmp;
 }
 
 template <typename T>
 bool vectorD<T>::iterator::operator==(const iterator & d)
 {
-    return(ite_rep == d.ite_rep);
+    if((*el_vect).n_ele > (*el_vect).vd.size())
+    {
+        return i_vect == (*el_vect).n_ele;
+    }
+    return ite_rep == d.ite_rep;
 }
 
 template <typename T>
 bool vectorD<T>::iterator::operator!=(const iterator & d)
 {
-    return(!(*this == d));
+    if((*el_vect).n_ele > (*el_vect).vd.size())
+    {
+        return i_vect != (*el_vect).n_ele;
+    }
+    return ite_rep != d.ite_rep;
 }
 
 template <typename T>
