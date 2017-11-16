@@ -172,7 +172,7 @@ const T & vectorD<T>::operator[](int c) const
 		}
 	}
 
-	return v_nulo;				
+	return v_nulo;
 }
 
 template <class T>
@@ -196,6 +196,35 @@ template <class T>
 bool vectorD<T>::operator!=(const vectorD<T> & x)
 {
 	return !(*this == x);
+}
+
+template <class T>
+int vectorD<T>::checkRepFails()
+{
+    int tipo_fallo  = 0;
+
+    if(0 <= vd.size() && vd.size() < n_ele) tipo_fallo = 1;
+    else{
+        bool sigo = true;
+        for(int i = 0; i < vd.size() && sigo; i++){
+            if(vd[i].first == v_nulo){
+                tipo_fallo = 2;
+                sigo = false;
+            }else if(vd[i].first <= 0){
+                tipo_fallo = 3;
+                sigo = false;
+            }
+        }
+        sigo = true;
+        for(int i = 0; i < vd.size() && sigo; i++)
+            for(int j = i+1; j < vd.size() && sigo;j++){
+                if(vd[i].fist > vd[j].first){
+                    tipo_fallo = 4;
+                    sigo = false;
+                }
+            }
+    }
+    return(tipo_fallo);
 }
 
 template <class T>
