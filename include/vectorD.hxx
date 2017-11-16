@@ -1,3 +1,12 @@
+/*
+    ESTRUCTURAS DE DATOS
+    PRACTICA 3: Implementacion del TDA Vector Disperso
+    Grupo B
+    Realizado por:
+        Pedro Dominguez López
+        Darío Abad Tarifa
+*/
+
 #include <cassert>
 #include <algorithm>
 #include <iostream>
